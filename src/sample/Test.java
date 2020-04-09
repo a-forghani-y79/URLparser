@@ -16,8 +16,6 @@ public class Test {
     public static void main(String[] args) throws IOException {
 
         Document doc = Jsoup.connect("https://en.wikipedia.org/").get();
-
-
         System.out.println(doc.title());
         Elements newsHeadlines = doc.select("#mp-itn b a");
         for (Element headline : newsHeadlines){
