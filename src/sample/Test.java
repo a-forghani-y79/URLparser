@@ -7,7 +7,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-import static com.sun.activation.registries.LogSupport.log;
 
 
 public class Test {
