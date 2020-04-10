@@ -10,5 +10,6 @@
     <orderEntry type="library" name="jsoup-1.13.1" level="project" />
     <orderEntry type="library" name="jsoup-1.13.1-javadoc" level="project" />
     <orderEntry type="library" name="jsoup-1.13.1-sources" level="project" />
+    <orderEntry type="library" name="jfoenix-8.0.8" level="project" />
   </component>
 </module>
