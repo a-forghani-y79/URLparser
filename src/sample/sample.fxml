@@ -3,11 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTreeView?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Reflection?>
 <?import javafx.scene.effect.Shadow?>
@@ -17,13 +16,13 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="745.0" style="-fx-background-color: #83a0ae;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="745.0" style="-fx-background-color: #83a0ae;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
       <AnchorPane layoutX="12.0" layoutY="23.0" prefHeight="479.0" prefWidth="722.0" style="-fx-border-color: #f58e00; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 4;">
          <children>
             <AnchorPane layoutX="11.0" layoutY="14.0" prefHeight="71.0" prefWidth="696.0" style="-fx-border-color: #f58e00; -fx-background-color: #3d5a68; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 3;">
                <children>
-                  <JFXTextField alignment="BASELINE_LEFT" layoutX="14.0" layoutY="20.0" prefHeight="31.0" prefWidth="455.0" promptText="Enter URL here..." style="-fx-background-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 4;" viewOrder="5.0">
+                  <JFXTextField fx:id="url" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="20.0" prefHeight="31.0" prefWidth="455.0" promptText="Enter URL here..." style="-fx-background-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 4;">
                      <font>
                         <Font name="Bookman Old Style Bold Italic" size="16.0" />
                      </font>
@@ -34,9 +33,6 @@
                            </input>
                         </InnerShadow>
                      </effect>
-                     <cursor>
-                        <Cursor fx:constant="SW_RESIZE" />
-                     </cursor>
                      <unFocusColor>
                         <LinearGradient endX="0.6717557470307096" endY="1.0">
                            <stops>
@@ -54,7 +50,7 @@
                         </LinearGradient>
                      </focusColor>
                   </JFXTextField>
-                  <JFXButton layoutX="526.0" layoutY="19.0" prefHeight="34.0" prefWidth="145.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="load" textFill="#2c2b27">
+                  <JFXButton fx:id="btnLoad" layoutX="526.0" layoutY="19.0" onMouseClicked="#onClickLoad" prefHeight="34.0" prefWidth="145.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="load" textFill="#2c2b27">
                      <font>
                         <Font name="Bookman Old Style Bold" size="15.0" />
                      </font>
@@ -66,10 +62,10 @@
                         </Reflection>
                      </effect></JFXButton>
                </children></AnchorPane>
-            <JFXTreeView layoutX="11.0" layoutY="92.0" prefHeight="294.0" prefWidth="184.0" style="-fx-background-color: #3a4cb0; -fx-background-radius: 5; -fx-border-color: #f58e00; -fx-border-radius: 5; -fx-border-width: 3;" />
+            <JFXTreeView fx:id="treeView" layoutX="11.0" layoutY="92.0" prefHeight="294.0" prefWidth="184.0" style="-fx-background-color: #3a4cb0; -fx-background-radius: 5; -fx-border-color: #f58e00; -fx-border-radius: 5; -fx-border-width: 3;" />
             <AnchorPane layoutX="11.0" layoutY="396.0" prefHeight="71.0" prefWidth="696.0" style="-fx-border-color: #f58e00; -fx-background-color: #3d5a68; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 3;">
                <children>
-                  <JFXTextField layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="455.0" promptText="Select location for export ..." style="-fx-background-color: #83a0ae; -fx-border-width: 3; -fx-border-radius: 10; -fx-background-radius: 10;">
+                  <JFXTextField fx:id="txtExport"  editable="false" layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="455.0" promptText="Select location for export ..." style="-fx-background-color: #83a0ae; -fx-border-width: 3; -fx-border-radius: 10; -fx-background-radius: 10;">
                      <font>
                         <Font name="Bookman Old Style Bold Italic" size="15.0" />
                      </font>
@@ -95,8 +91,9 @@
                               <Stop color="WHITE" offset="1.0" />
                            </stops>
                         </LinearGradient>
-                     </focusColor></JFXTextField>
-                  <JFXButton layoutX="496.0" layoutY="20.0" prefHeight="30.0" prefWidth="86.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="browse" textFill="#2c2b27">
+                     </focusColor>
+                  </JFXTextField>
+                  <JFXButton fx:id="btnBrows" layoutX="496.0" layoutY="20.0" onMouseClicked="#onClickBrows" prefHeight="30.0" prefWidth="86.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="browse" textFill="#2c2b27">
                      <font>
                         <Font name="Bookman Old Style Bold" size="10.0" />
                      </font>
@@ -105,12 +102,10 @@
                            <bumpInput>
                               <Shadow />
                            </bumpInput>
-                           <light>
-                              <Light.Distant />
-                           </light>
                         </Lighting>
-                     </effect></JFXButton>
-                  <JFXButton layoutX="595.0" layoutY="20.0" prefHeight="30.0" prefWidth="86.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="export" textFill="#2c2b27">
+                     </effect>
+                  </JFXButton>
+                  <JFXButton fx:id="btnExport" onMouseClicked="#onClickExport" layoutX="595.0" layoutY="20.0" prefHeight="30.0" prefWidth="86.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="export" textFill="#2c2b27">
                      <font>
                         <Font name="Bookman Old Style Bold" size="10.0" />
                      </font>
@@ -120,18 +115,23 @@
                               <Color blue="0.3870224058628082" green="0.3870224058628082" red="0.39210525155067444" />
                            </color>
                         </Shadow>
-                     </effect></JFXButton>
+                     </effect>
+                  </JFXButton>
                </children>
             </AnchorPane>
-            <Label layoutX="203.0" layoutY="92.0" prefHeight="294.0" prefWidth="504.0" style="-fx-border-color: #f58e00; -fx-background-color: #3d5a68; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 3;" />
-            <JFXButton layoutX="18.0" layoutY="350.0" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="select all" textFill="#2c2b27">
-               <font>
-                  <Font name="Bookman Old Style Bold" size="10.0" />
-               </font></JFXButton>
-            <JFXButton layoutX="110.0" layoutY="350.0" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="Deselect all" textFill="#2c2b27">
-               <font>
-                  <Font name="Bookman Old Style Bold" size="9.0" />
-               </font></JFXButton>
+<!--            <JFXButton layoutX="18.0" layoutY="350.0" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="select all" textFill="#2c2b27">-->
+<!--               <font>-->
+<!--                  <Font name="Bookman Old Style Bold" size="10.0" />-->
+<!--               </font></JFXButton>-->
+            <ScrollPane layoutX="203.0" layoutY="92.0" prefHeight="294.0" prefWidth="504.0">
+               <content>
+                  <Label fx:id="lbl" style="-fx-border-color: #f58e00; -fx-background-color: #3d5a68; -fx-background-radius: 5; -fx-border-radius: 5; -fx-border-width: 3;" />
+               </content>
+            </ScrollPane>
+<!--            <JFXButton layoutX="110.0" layoutY="350.0" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: #f58e00; -fx-border-color: #83a0ae; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-width: 3;" text="Deselect all" textFill="#2c2b27">-->
+<!--               <font>-->
+<!--                  <Font name="Bookman Old Style Bold" size="9.0" />-->
+<!--               </font></JFXButton>-->
          </children>
       </AnchorPane>
    </children>
