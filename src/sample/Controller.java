@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public JFXTreeView<Child> treeView;
+    public JFXTreeView<Parser> treeView;
     public JFXTextField url;
     public JFXButton btnLoad;
     public JFXButton btnBrows;
@@ -27,15 +26,15 @@ public class Controller implements Initializable {
     public JFXTextField txtExport;
     public Label lbl;
     private File exportFile;
-    Child child;
-    TreeItem<Child> URLRoot;
-    ArrayList<Child> list;
+    Parser parser;
+    TreeItem<Parser> URLRoot;
+    ArrayList<Parser> list;
 
 
     public void onClickExport() {
         list = new ArrayList<>();
-        list.add(child);
-        for (TreeItem<Child> item :
+        list.add(parser);
+        for (TreeItem<Parser> item :
                 treeView.getRoot().getChildren()) {
             list.add(item.getValue());
         }
@@ -53,11 +52,11 @@ public class Controller implements Initializable {
         File file;
         FileWriter fileWriter;
         try {
-            for (Child child : list
+            for (Parser parser : list
             ) {
-                file = new File(exportFile.getAbsolutePath() + "\\" + child.getTitle() + ".txt");
+                file = new File(exportFile.getAbsolutePath() + "\\" + parser.getTitle() + ".txt");
                 fileWriter = new FileWriter(file);
-                fileWriter.write(child.getURLString());
+                fileWriter.write(parser.getURLString());
                 fileWriter.flush();
             }
         } catch (Exception e) {
@@ -86,17 +85,17 @@ public class Controller implements Initializable {
             lbl.setText("URL not Valid");
             return;
         }
-        child = new Child(URL);
-        setupTreeView(child);
+        parser = new Parser(URL);
+        setupTreeView(parser);
     }
 
-    private void setupTreeView(Child child) {
-        URLRoot = new TreeItem<>(child);
+    private void setupTreeView(Parser parser) {
+        URLRoot = new TreeItem<>(parser);
         URLRoot.setExpanded(true);
-        HashMap<String, String> subURLs = child.getSubURL();
+        HashMap<String, String> subURLs = parser.getSubURL();
         subURLs.forEach((url, title) -> {
             if (isValid(url)) {
-                URLRoot.getChildren().add(new TreeItem<>(new Child(url)));
+                URLRoot.getChildren().add(new TreeItem<>(new Parser(url)));
             }
         });
 

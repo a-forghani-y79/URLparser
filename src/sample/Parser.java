@@ -7,16 +7,13 @@ import org.jsoup.select.Elements;
 
 import java.util.HashMap;
 
-public class Child {
+public class Parser {
     private String title;
-    private String url;
     private Document doc;
 
 
-    public Child(String url) {
+    public Parser(String url) {
         try {
-
-            this.url = url;
             doc = Jsoup.connect(url).get();
             this.title = doc.title();
 
@@ -29,17 +26,8 @@ public class Child {
         }
     }
 
-
     public String getTitle() {
         return title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getURLString() {
